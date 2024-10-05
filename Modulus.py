@@ -1,6 +1,6 @@
 class Modulus:
     def __init__(self, num, mod):
-        self.num = num % mod
+        self.num = (num % mod + mod) % mod
         self.mod = mod
     
     def __add__(self, other):  
