@@ -47,7 +47,6 @@ class SegTree:
                     
             nodeIdx = len(self.tr)
             self.tr.append(SegNode.identity())
-            self.parent.append(parentIdx)
             self.L_child.append(None)
             self.R_child.append(None)
 
