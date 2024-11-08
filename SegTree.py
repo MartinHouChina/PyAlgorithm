@@ -26,7 +26,6 @@ class SegTree:
         self.tr: List[SegNode] = [SegNode.identity()]
         self.L_child: List[int] = [None]
         self.R_child: List[int] = [None]
-        self.parent: List[int] = [None]
         self.L = L 
         self.R = R
     
@@ -68,8 +67,11 @@ class SegTree:
     
     def query(self, l: int, r: int, L: int = None, R: int = None, nodeIdx: int = 0):
         
+        if nodeIdx is None:
+            return SegNode.identity()
+
         if L is None:
-            L = self.L 
+            L = self.L   
         
         if R is None:
             R = self.R

@@ -129,11 +129,11 @@ class SortedSet(Generic[T]):
                 self.data.pop(L_bidx)
         else:
             for _ in range(len(self.data[L_bidx]) - L_idx):
-                self.data[L_bidx].pop[L_idx]
+                self.data[L_bidx].pop(0)
                 self.size -= 1
             
             for _ in range(R_idx):
-                self.data[R_bidx].pop[0]
+                self.data[R_bidx].pop(0)
                 self.size -= 1
             
             for _ in range((R_bidx if R_bidx is not None else len(self.data)) - (L_bidx + 1)):
@@ -151,75 +151,3 @@ class SortedSet(Generic[T]):
 
     def get(self, bidx, idx):
         return self.data[bidx][idx]
-    
-
-
-Q = int(input())
-S = SortedSet(duplicate_allowed=True)
-from sortedcontainers import SortedList
-
-
-
-A = SortedList([])
-
-# for _ in range(Q):
-#     query = list(map(int, input().split()))
-#     if query[0] == 1:
-#         x = query[1]
-        
-#     elif query[0] == 2:
-#         x, k = query[1:]
-#         idx = A.bisect_right(x)
-#         if idx - k < 0:
-#             print(-1)
-#         else:
-#             print(A[idx - k])
-#     elif query[0] == 3:
-#         x, k = query[1:]
-#         idx = A.bisect_left(x)
-#         if idx + k - 1 >= len(A):
-#             print(-1)
-#         else:
-#             print(A[idx + k - 1])
-
-
-for _ in range(Q):
-    q = list(map(int, input().split()))
-    if q[0] == 1:
-        S.insert(q[1])
-        A.add(q[1])
-    elif q[0] == 3:
-        # x, k = q[1:]
-        # idx = A.bisect_left(x)
-        # if idx + k - 1 >= len(A):
-        #     print(-1)
-        # else:
-        #     print(A[idx + k - 1])
-        flag = True
-        pos = S.lower_bound(q[1])
-        if S.is_end(*pos):
-            print(-1)
-            continue 
-        for _ in range(q[2] - 1):
-            if S.is_end(*S.next(*pos)):
-                flag = False 
-                break
-            pos = S.next(*pos)
-        if flag: print(S.get(*pos))
-        else: print(-1)
-    else:
-        x, k = q[1:]
-        idx = A.bisect_right(x)
-        if idx - k < 0:
-            print(-1)
-        else:
-            print(A[idx - k])
-        # flag = True
-        # pos = S.upper_bound(q[1])
-        # for i in range(q[2]):
-        #     if S.is_begin(*pos):
-        #         flag = False 
-        #         break
-        #     pos = S.prev(*pos)
-        # if flag and pos[0] >= 0: print(S.get(*pos))
-        # else: print(-1)
