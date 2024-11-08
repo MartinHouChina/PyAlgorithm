@@ -29,7 +29,7 @@ class SegTree:
         self.L = L 
         self.R = R
     
-    def update(self, pos: int, node: SegNode, L: int = None, R: int = None, nodeIdx: int = 0, parentIdx: int = None, dir: int = None):
+    def updateSet(self, pos: int, node: SegNode, L: int = None, R: int = None, nodeIdx: int = 0, parentIdx: int = None, dir: int = None):
         
         if L is None:
             L = self.L
@@ -53,6 +53,41 @@ class SegTree:
 
         if L == R:
             self.tr[nodeIdx] = node
+            return 
+        
+        mid = (L + R) >> 1
+        if pos <= mid: self.update(pos, node, L, mid, self.L_child[nodeIdx], nodeIdx, 0)
+        else: self.update(pos, node, mid + 1, R, self.R_child[nodeIdx], nodeIdx, 1)
+
+        childl = SegNode.identity() if self.L_child[nodeIdx] is None else self.tr[self.L_child[nodeIdx]]
+        childr = SegNode.identity() if self.R_child[nodeIdx] is None else self.tr[self.R_child[nodeIdx]]
+
+        self.tr[nodeIdx] = childl + childr
+
+    def updateAdd(self, pos: int, node: SegNode, L: int = None, R: int = None, nodeIdx: int = 0, parentIdx: int = None, dir: int = None):
+        
+        if L is None:
+            L = self.L
+
+        if R is None:
+            R = self.R
+
+        if nodeIdx is None:
+
+            if parentIdx is not None:
+                if dir == 0:                    
+                    self.L_child[parentIdx] = len(self.tr)
+                else:
+                    self.R_child[parentIdx] = len(self.tr)
+                    
+            nodeIdx = len(self.tr)
+            self.tr.append(SegNode.identity())
+            self.L_child.append(None)
+            self.R_child.append(None)
+
+
+        if L == R:
+            self.tr[nodeIdx] += node
             return 
         
         mid = (L + R) >> 1
