@@ -162,23 +162,3 @@ class LazyTree:
     
     def __repr__(self) -> str:
         return f"SegTree({str(self.tr)} | {str(self.tag)})"
-
-
-
-if __name__ == '__main__':
-    tree = LazyTree(1, 4)
-    
-    A = [1, 3, 1, 4]
-    
-    for i in range(len(A)):
-        tree.updatePos(i + 1, LazyNode(A[i], 1))
-
-
-    print(tree)
-
-    tree.updateRange(1, 3, Tag(2))
-    tree.updatePos(2, LazyNode(-100, 2))
-    
-    print(tree)
-    print(tree)
-    print(tree)
