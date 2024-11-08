@@ -50,7 +50,6 @@ class LazyTree:
         self.tag: List[Tag] = [Tag.identity()]
         self.L_child: List[int] = [None]
         self.R_child: List[int] = [None]
-        self.parent: List[int] = [None]
         self.L = L 
         self.R = R
     
@@ -63,7 +62,6 @@ class LazyTree:
                     
         idx = len(self.tr)
         self.tr.append(LazyNode.identity())
-        self.parent.append(pidx)
         self.L_child.append(None)
         self.R_child.append(None)
         self.tag.append(Tag.identity())
@@ -142,6 +140,9 @@ class LazyTree:
     
     def query(self, l: int, r: int, L: int = None, R: int = None, nodeIdx: int = 0):
         
+        if nodeIdx is None:
+            return LazyNode.identity()
+
         if L is None:
             L = self.L 
         
